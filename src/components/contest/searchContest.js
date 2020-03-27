@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 
-class searchContest extends Component
+class SearchContest extends Component
 {
     constructor()
     {
@@ -13,7 +13,7 @@ class searchContest extends Component
             contests: [],
             selected: -1, 
             no_result: 0, 
-            auth_code: 'Bearer 532af8989d132834cff90adf2ab728db97684472', // change this
+            auth_code: 'Bearer 1e0d9418c2f66a4b95927e67d9bba8c407862ba0', // change this
         }
     }
 
@@ -101,7 +101,6 @@ class searchContest extends Component
 
     UNSAFE_componentWillMount = () =>
     {
-        console.log(this.props.match);
         const header = {
             Authorization: this.state.auth_code,
             Accept: 'application/json',
@@ -160,4 +159,4 @@ class searchContest extends Component
     }
 }
 
-export default withRouter(searchContest);
+export default withRouter(SearchContest);
