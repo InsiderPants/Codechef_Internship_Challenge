@@ -11,90 +11,88 @@ class Contest extends Component
         this.state = {
             contestCode: "",
             contestDetails: {
-                code: 'LTIME71A',
-                name: 'April Lunchtime 2019 Division 1',
+                code: '-1',
+                name: 'Loading...',
                 startDate: '2019-04-27 19:30:00',
                 endDate: '2019-04-27 22:30:00',
                 isParent: false,
                 children: [],
-                bannerFile: 'https://www.codechef.com/download/small-banner/LTIME71A/1556198802.jpg',
-                freezingTime: 0,
-                announcements: '&lt;p&gt;14:30, 15th October 2017: The exam is extended by 10 minutes.&lt;br /&gt;&lt;b&gt;&lt;br /&gt;The problem weightages are given below in rules section.&lt;/b&gt;&lt;/p&gt;\r\n&lt;p&gt;The content of Recent Activity block from exam page has been made inaccessible. In case if you try to access it, you will get an error stating&nbsp;&lt;b&gt;&quot;You are not allowed to check this contest. Please reload&quot;&lt;/b&gt;. Please ignore the error and continue with your exam.&lt;/p&gt;\r\n&lt;p&gt;14:44, 15th October 2017: Problem accuracy will not be displayed. It has been restricted for this exam.&lt;/p&gt;\r\n&lt;p&gt;Also, the score shown on the exam page is not final. It is subject to change after final verification.&lt;/p&gt;\r\n&lt;p&gt;Additionally, you cannot leave the exam hall before 3:30 pm.&lt;/p&gt;',
+                bannerFile: '',
                 problemsList: [
                   {
                     viewStart: '2019-04-27 19:30:00',
                     submitStart: '2019-04-27 19:30:00',
                     visibleStart: '2019-04-27 22:30:00',
                     end: '2019-04-27 22:30:00',
-                    problemCode: 'R2D2',
+                    problemCode: 'Loading...',
                     contestCode: 'LTIME71A',
-                    successfulSubmissions: 3,
-                    accuracy: 3.1746031746031744
+                    successfulSubmissions: 0,
+                    accuracy: 0.0,
                   },
                   {
                     viewStart: '2019-04-27 19:30:00',
                     submitStart: '2019-04-27 19:30:00',
                     visibleStart: '2019-04-27 22:30:00',
                     end: '2019-04-27 22:30:00',
-                    problemCode: 'ATTND',
+                    problemCode: 'Loading...',
                     contestCode: 'LTIME71A',
-                    successfulSubmissions: 6,
-                    accuracy: 100
+                    successfulSubmissions: 0,
+                    accuracy: 0.0,
                   },
                   {
                     viewStart: '2019-04-27 19:30:00',
                     submitStart: '2019-04-27 19:30:00',
                     visibleStart: '2019-04-27 22:30:00',
                     end: '2019-04-27 22:30:00',
-                    problemCode: 'DRMP',
+                    problemCode: 'Loading...',
                     contestCode: 'LTIME71A',
-                    successfulSubmissions: 75,
-                    accuracy: 7.096774193548387
+                    successfulSubmissions: 0,
+                    accuracy: 0.0,
                   },
                   {
                     viewStart: '2019-04-27 19:30:00',
                     submitStart: '2019-04-27 19:30:00',
                     visibleStart: '2019-04-27 22:30:00',
                     end: '2019-04-27 22:30:00',
-                    problemCode: 'FAPF',
+                    problemCode: 'Loading...',
                     contestCode: 'LTIME71A',
-                    successfulSubmissions: 188,
-                    accuracy: 33.45132743362832
+                    successfulSubmissions: 0,
+                    accuracy: 0.0,
                   },
                   {
                     viewStart: '2019-04-27 19:30:00',
                     submitStart: '2019-04-27 19:30:00',
                     visibleStart: '2019-04-27 22:30:00',
                     end: '2019-04-27 22:30:00',
-                    problemCode: 'FASTFOOD',
+                    problemCode: 'Loading...',
                     contestCode: 'LTIME71A',
-                    successfulSubmissions: 4,
-                    accuracy: 66.66666666666666
+                    successfulSubmissions: 0,
+                    accuracy: 0.0,
                   },
                   {
                     viewStart: '2019-04-27 19:30:00',
                     submitStart: '2019-04-27 19:30:00',
                     visibleStart: '2019-04-27 22:30:00',
                     end: '2019-04-27 22:30:00',
-                    problemCode: 'MINARRS',
+                    problemCode: 'Loading...',
                     contestCode: 'LTIME71A',
-                    successfulSubmissions: 304,
-                    accuracy: 57.765151515151516
+                    successfulSubmissions: 0,
+                    accuracy: 0.0,
                   },
                   {
                     viewStart: '2019-04-27 19:30:00',
                     submitStart: '2019-04-27 19:30:00',
                     visibleStart: '2019-04-27 22:30:00',
                     end: '2019-04-27 22:30:00',
-                    problemCode: 'CHEFRAMI',
+                    problemCode: 'Loading...',
                     contestCode: 'LTIME71A',
-                    successfulSubmissions: 39,
-                    accuracy: 11.370262390670554
+                    successfulSubmissions: 0,
+                    accuracy: 0.0,
                   }
                 ],
                 currentTime: 1585197835,
             },
-            problemsName: ["The Last Droid", "Attendance", "Dream Problem", "Firdavs and Planet F", "Fast Food", "Minimum Sum", "Chef Rami and Inventions"],
+            problemsName: ["Loading...", "Loading...", "Loading...", "Loading...", "Loading...", "Loading...", "Loading...", "Loading...", "Loading..."],
             // problemsName: new Map(),
             recentSubmissions: [
                 {
@@ -218,8 +216,8 @@ class Contest extends Component
                   memory: 0
                 }
               ],
-            selectedProblem: 0,
-            auth_code: 'Bearer b84cb21b3314606c35b43c0b6d61a9b6e6f800d9', // change this
+            rankings: [{rank: 1, username: "hello", totalScore: "100"}],
+            auth_code: 'Bearer 29d484c139652d4deeaae05878fed6c1ec377d39', // change this
         };
     }    
 
@@ -252,38 +250,39 @@ class Contest extends Component
         const header = {
             Authorization: this.state.auth_code,
             Accept: 'application/json',
-        };
-        
+        }; 
+
+        let promiseArray = [];
         let temp;
-        let t3 = [];
         axios.get(url, {headers: header})
-            .then(res => {   
+            .then(res => {
                 temp = res.data.result.data.content;
-                if(temp.problemsList.length === 0) return;
-                
+                this.setState({contestDetails: temp});
+            })
+            .then(() => {
                 for(var i = 0; i < temp.problemsList.length; i++)
                 {
                     let code = temp.problemsList[i].problemCode;
-                    let url2 = (url + '/problems/' + code);                    
-                    
-                    axios.get(url2, {headers: header})
-                    .then(res2 => {
-                        let t2 = res2.data.result.data.content.problemName;
-                        t3.push(t2);               
+                    let url2 = (url + '/problems/' + code);   
+
+                    promiseArray.push(axios.get(url2, {headers: header}));
+                }
+                
+                let t3 = []
+                Promise.all(promiseArray)
+                    .then((val) => {
+                        for(let i = 0; i < val.length; i++)
+                        {
+                            let t2 = val[i].data.result.data.content.problemName;
+                            t3.push(t2);
+                        }
+                        this.setState({problemsName: t3});
                     })
-                    .catch(err => {t3.push(err); console.log(err);})
-                }    
+                    .catch(err => console.log(err))
             })
-            .then(() => {
-                this.setState({contestDetails: temp});
-                this.setState({
-                    problemsName: t3,
-                })
-            })
-            .catch(err => {
-                console.log(err);
-            })  
-            
+            .catch(err => console.log(err))
+        
+        //submissions
         let url2 = "https://api.codechef.com/submissions/"
         axios.get(url2, {
             headers: header,
@@ -293,6 +292,29 @@ class Contest extends Component
             this.setState({recentSubmissions: res.data.result.data.content})
         })
         .catch(err => console.log(err))
+
+        //rankings
+        let t4 = []
+        let url3 = "https://api.codechef.com/rankings/" + id;
+        axios.get(url3 , {headers: header})
+            .then(res => {
+                let arr = res.data.result.data.content;
+                for(var i = 0; i < arr.length && i < 8; i++)
+                {
+                    let rnk = arr[i].rank;
+                    let name = arr[i].username;
+                    let score = arr[i].totalScore;
+
+                    t4.push({
+                        rank: rnk,
+                        username: name,
+                        totalScore: score,
+                    })
+                }
+
+                this.setState({rankings: t4})
+            })
+            .catch(err => console.log(err))
     }
 
     handleProblemClick = (i) => {
@@ -308,8 +330,6 @@ class Contest extends Component
 
     render()
     {
-        console.log(this.state.problemsName);
-        
         const dual_mode = (
             <div className = "row justify-content-around">
             <div className = "card" style = {{width: "46%"}}>
@@ -343,10 +363,7 @@ class Contest extends Component
                         </thead>
                         <tbody>
                             {this.state.contestDetails.problemsList.map((val, i) => {
-                                let problemCode = val.problemCode;
-                                console.log(problemCode);
-                                console.log(this.state.problemsName[0]);
-                                console.log(this.state.problemsName.length);                                
+                                let problemCode = val.problemCode;                              
                                 return (
                                     <tr key = {i} onClick = {e => this.handleProblemClick(problemCode)} style = {{cursor: 'pointer'}}>
                                         <td> {this.state.problemsName[i]} </td>
@@ -361,15 +378,37 @@ class Contest extends Component
                 </div>      
                 <div className = "col-4">
                     <Timer currentTime = {this.state.contestDetails.currentTime} startTime = {this.state.contestDetails.startDate} endTime = {this.state.contestDetails.endDate} />
-                    <div className = "card">
-                        <div className = "card-body">
-                            <h5 className = "card-title"> Rankings </h5>
-                            <p className = "card-text"> Check the ranking of this contest here. </p>
-                            <button className = "btn btn-outline-primary btn-sm ml-0"> Rankings </button>
-                        </div>
-                    </div> 
-
                     <div className = "accordion mt-4" id = "accordionExample">
+                        <div className = "card">
+                            <div className = "card-header" id = "headingOne1">
+                                <h2 className = "mb-0">
+                                    <button className = "btn btn-link" type = "button" data-toggle = "collapse" data-target = "#collapseOne1" aria-expanded = "false" aria-controls = "collapseOne">
+                                        Rankings
+                                    </button>
+                                </h2>
+                            </div>
+
+                            <div id ="collapseOne1" className = "collapse" aria-labelledby = "headingOne1" data-parent = "#accordionExample">
+                                {this.state.rankings.map((val, i) => {
+                                    let rank = val.rank;
+                                    let username = val.username;
+                                    let score = val.totalScore;
+
+                                    return (
+                                        <div key = {i}>
+                                            <div className = "card-body py-3 px-2">
+                                                <div className = "row">
+                                                    <div className = "col-1"> {rank} </div>
+                                                    <div className = "col-7"> {username} </div>
+                                                    <div className = "col-3"> {(Math.round(score * 10) / 10)} </div>
+                                                </div>
+                                            </div>
+                                            <hr className = "m-0" />
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        </div>
                         <div className = "card">
                             <div className = "card-header" id = "headingOne">
                                 <h2 className = "mb-0">

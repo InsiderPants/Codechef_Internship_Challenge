@@ -13,7 +13,7 @@ class SearchContest extends Component
             contests: [],
             selected: -1, 
             no_result: 0, 
-            auth_code: 'Bearer 1e0d9418c2f66a4b95927e67d9bba8c407862ba0', // change this
+            auth_code: 'Bearer 51478c701357f99222b1b417415beb0cc92e8ad8', // change this
         }
     }
 

@@ -7,11 +7,9 @@ import Login from './components/login/Login';
 import Contest from './components/contest/Contest';
 import SearchContest from './components/contest/searchContest';
 import Problem from './components/problems/problem';
-import AllProblemSet from './components/problems/allProblemSet';
 import Submit from './components/submitAndRun/submit';
 import Navbar from './components/navbar/navbar';
 import Footer from './components/footer/footer';
-import Ranklist from './components/contest/ranklist';
 
 class App extends Component {
     render() {
@@ -27,9 +25,6 @@ class App extends Component {
                         <Route exact path = '/contest/:contestID' component = {Contest} />
                         <Route exact path = '/contest/:contestID/problem/:problemID' component = {Problem} />
                         <Route exact path = '/contest/:contestID/problem/:problemID/submit' component = {Submit} />
-                        <Route exact path = '/contest/:contestID/ranklist' component = {Ranklist} />
-                        <Route exact path = '/problemset' component = {AllProblemSet} />
-                        <Route exact path = '/problemset/:problemID' component = {Problem} />
 
                         {/* default route */}
                         <Route component = {Login} />

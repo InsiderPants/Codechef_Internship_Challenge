@@ -18,13 +18,15 @@ class Navbar extends Component
 
     loginButtonClick = () => {
         this.props.history.push('/login');
-        this.setState({isLoggedIn: 1});
     }
 
     logout = () => {
         //logout
         this.setState({isLoggedIn: 0});
     }
+
+    
+
     render() 
     {
         const login = (
