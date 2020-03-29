@@ -15,7 +15,7 @@ class Login extends Component
         const params = {
             response_type: "code",
             client_id: "b95126500791d884442d2700950f0e1b",
-            redirect_api: "http://localhost:8000/",
+            redirect_api: "http://localhost:3000/", // github wala
             state: "hello",
         }
 
