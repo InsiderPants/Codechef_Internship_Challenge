@@ -89,6 +89,10 @@ class Problem extends Component
 
     UNSAFE_componentWillMount()
     {
+        let token = window.localStorage.getItem("accessToken");
+        if(token == null || token.length === 0) this.props.history.push('/');
+        else this.setState({auth_code: "Bearer " + token});
+
         let contestID = this.props.match.params.contestID;
         let problemID = this.props.match.params.problemID;
 

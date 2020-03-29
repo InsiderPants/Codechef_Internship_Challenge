@@ -324,6 +324,10 @@ class Contest extends Component
 
     UNSAFE_componentWillMount()
     {
+        let token = window.localStorage.getItem("accessToken");
+        if(token == null || token.length === 0) this.props.history.push('/');
+        else this.setState({auth_code: "Bearer " + token});
+
         const id = this.props.match.params.contestID; 
         this.updateIT(id);
     }

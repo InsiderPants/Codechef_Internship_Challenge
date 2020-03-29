@@ -7,7 +7,7 @@ class Navbar extends Component
     {
         super();
         this.state = {
-            isLoggedIn: 1,
+            isLoggedIn: 0,
             user_name: "insider_pants",
         };
     }
@@ -25,13 +25,18 @@ class Navbar extends Component
         this.setState({isLoggedIn: 0});
     }
 
-    
+    UNSAFE_componentWillMount()
+    {
+        let accessToken = window.localStorage.getItem("accessToken");
+        if(accessToken == null || accessToken.length === 0) this.setState({isLoggedIn: 0});
+        else this.setState({isLoggedIn: 1});
+    }
 
     render() 
     {
         const login = (
             <div>
-                <button className = "btn btn-outline-light btn-sm my-0" onClick = {this.loginButtonClick}> Login </button>
+                {(this.props.match.url === "/" || this.props.match.url === "/login") ? <div></div> : <button className = "btn btn-outline-light btn-sm my-0" onClick = {this.loginButtonClick}> Login </button>}
             </div>
         );
 

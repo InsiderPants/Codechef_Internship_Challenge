@@ -13,7 +13,7 @@ class SearchContest extends Component
             contests: [],
             selected: -1, 
             no_result: 0, 
-            auth_code: 'Bearer 51478c701357f99222b1b417415beb0cc92e8ad8', // change this
+            auth_code: '', // change this
         }
     }
 
@@ -101,6 +101,10 @@ class SearchContest extends Component
 
     UNSAFE_componentWillMount = () =>
     {
+        let token = window.localStorage.getItem("accessToken");
+        if(token == null || token.length === 0) this.props.history.push('/');
+        else this.setState({auth_code: "Bearer " + token});
+
         const header = {
             Authorization: this.state.auth_code,
             Accept: 'application/json',

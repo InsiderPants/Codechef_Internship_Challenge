@@ -79,7 +79,10 @@ class Submit extends Component
 
     UNSAFE_componentWillMount()
     {
-        // return;
+        let token = window.localStorage.getItem("accessToken");
+        if(token == null || token.length === 0) this.props.history.push('/');
+        else this.setState({auth_code: "Bearer " + token});
+
         let c1 = this.props.match.params.contestID;
         let c2 = this.props.match.params.problemID;
 
@@ -137,7 +140,6 @@ class Submit extends Component
             .catch(err => console.log(err))
 
         let t1 = 0, t2 = 0, t3 = 0, t4 = "", t5 = "";
-        let f = true;
         
         let t11 = setInterval(() =>
             axios.get(url2, {headers: header, params: {link: link}})
