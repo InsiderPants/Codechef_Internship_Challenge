@@ -66,7 +66,6 @@ class Submit extends Component
                 "F#"
               ],
             selected: 'C++ 6.3',
-            auth_code: "Bearer 51478c701357f99222b1b417415beb0cc92e8ad8",
             code: "",
             input: "",
             output: "",
@@ -79,10 +78,6 @@ class Submit extends Component
 
     UNSAFE_componentWillMount()
     {
-        let token = window.localStorage.getItem("accessToken");
-        if(token == null || token.length === 0) this.props.history.push('/');
-        else this.setState({auth_code: "Bearer " + token});
-
         let c1 = this.props.match.params.contestID;
         let c2 = this.props.match.params.problemID;
 
@@ -92,12 +87,7 @@ class Submit extends Component
         })
         
         const url = "https://api.codechef.com/contests/" + c1 + "/problems/" + c2;
-        const header = {
-            Authorization: this.state.auth_code,
-            Accept: 'application/json',
-        };
-
-        axios.get(url, {headers: header})
+        axios.get(url)
             .then(res => {                
                 this.setState({supportedLanguages: res.data.result.data.content.languagesSupported});
             })
@@ -119,21 +109,11 @@ class Submit extends Component
         }
 
         let url = "https://api.codechef.com/ide/run";
-        let url2 = "https://api.codechef.com/ide/status";
-        const header = {
-            Authorization: this.state.auth_code,
-            Accept: 'application/json',
-        };        
+        let url2 = "https://api.codechef.com/ide/status";  
 
-        const header1 = {
-            Authorization: this.state.auth_code,
-            Accept: 'application/json',
-            "Content-Type": 'application/json',
-        };    
-        console.log(data);
         let link;
         
-        axios.post(url, data, {headers: header1})
+        axios.post(url, data)
             .then(res => {
                 link = res.data.result.data.link;
             })
@@ -142,10 +122,8 @@ class Submit extends Component
         let t1 = 0, t2 = 0, t3 = 0, t4 = "", t5 = "";
         
         let t11 = setInterval(() =>
-            axios.get(url2, {headers: header, params: {link: link}})
-                .then(res2 => {
-                    console.log(res2.data);
-                    
+            axios.get(url2, {params: {link: link}})
+                .then(res2 => {                   
                     let time_taken = res2.data.result.data.time;
                     let signal = res2.data.result.data.signal;
                     let memory_used = res2.data.result.data.memory;
@@ -176,7 +154,17 @@ class Submit extends Component
                     }
                     
                 })
-                .catch(err => console.log(err)), 5000
+                .catch(err => {
+                    if(err.response.status === 401)
+                    {
+                        window.localStorage.removeItem("accessToken");
+                        window.localStorage.removeItem("refreshToken");
+                        delete axios.defaults.headers.common["Authorization"];
+                        clearInterval(t11);
+                        this.props.history.push('/');
+                    }
+                    else console.log(err);
+                }), 5000
         );
     }
 

@@ -78,7 +78,6 @@ class Problem extends Component
                 tags: [],
                 body: 'Loading....',
             },
-            auth_code: "Bearer 51478c701357f99222b1b417415beb0cc92e8ad8",
         }
     }
 
@@ -89,26 +88,27 @@ class Problem extends Component
 
     UNSAFE_componentWillMount()
     {
-        let token = window.localStorage.getItem("accessToken");
-        if(token == null || token.length === 0) this.props.history.push('/');
-        else this.setState({auth_code: "Bearer " + token});
-
         let contestID = this.props.match.params.contestID;
         let problemID = this.props.match.params.problemID;
 
         this.setState({contestID: contestID});
         
         const url = "https://api.codechef.com/contests/" + contestID + "/problems/" + problemID;
-        const header = {
-            Authorization: this.state.auth_code,
-            Accept: 'application/json',
-        };
-        axios.get(url, {headers: header})
+        axios.get(url)
             .then(res => {
                 let data = res.data.result.data.content;
                 this.setState({problemDetails: data});
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                if(err.response.status === 401)
+                {
+                    window.localStorage.removeItem("accessToken");
+                    window.localStorage.removeItem("refreshToken");
+                    delete axios.defaults.headers.common["Authorization"];
+                    this.props.history.push('/');
+                }
+                else console.log(err);
+            })
     }
 
     render() 

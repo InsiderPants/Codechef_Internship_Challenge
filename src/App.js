@@ -1,6 +1,7 @@
 //Libraries
 import React, {Component} from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+import axios from 'axios';
 
 // components import
 import Login from './components/login/Login';
@@ -9,9 +10,19 @@ import SearchContest from './components/contest/searchContest';
 import Problem from './components/problems/problem';
 import Submit from './components/submitAndRun/submit';
 import Navbar from './components/navbar/navbar';
-import Footer from './components/footer/footer';
 
 class App extends Component {
+
+    UNSAFE_componentWillMount()
+    {
+        axios.defaults.headers.common['Accept'] = "application/json";
+        axios.defaults.headers.post['Content-type'] = "application/json";
+        
+        let token = window.localStorage.getItem("accessToken");
+        if(token == null || token === undefined || token.length === 0) return;
+        
+        axios.defaults.headers.common['Authorization'] = "Bearer " + token;
+    }
     render() {
         return (
             <Router>
@@ -29,7 +40,6 @@ class App extends Component {
                         {/* default route */}
                         <Route component = {Login} />
                     </Switch>
-                    <Footer />
                 </div>
             </Router>
         )

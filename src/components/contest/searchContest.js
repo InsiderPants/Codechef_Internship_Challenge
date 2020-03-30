@@ -13,7 +13,6 @@ class SearchContest extends Component
             contests: [],
             selected: -1, 
             no_result: 0, 
-            auth_code: '', // change this
         }
     }
 
@@ -36,7 +35,12 @@ class SearchContest extends Component
             if(temp.length >= 10) break;
             let t1 = t.code.toLowerCase().includes(e.target.value.toLowerCase());
             let t2 = t.name.toLowerCase().includes(e.target.value.toLowerCase());
-            if(t2 === true || t1 === true) temp.push(t);
+            if(t2 === true || t1 === true)
+            {
+                console.log(t);
+                
+                temp.push(t);
+            }
         }
         if(temp.length === 0) 
         {
@@ -101,22 +105,23 @@ class SearchContest extends Component
 
     UNSAFE_componentWillMount = () =>
     {
-        let token = window.localStorage.getItem("accessToken");
-        if(token == null || token.length === 0) this.props.history.push('/');
-        else this.setState({auth_code: "Bearer " + token});
-
-        const header = {
-            Authorization: this.state.auth_code,
-            Accept: 'application/json',
-        }
-
-        axios.get('https://api.codechef.com/contests', {headers: header})
+        axios.get('https://api.codechef.com/contests')
             .then(res => {
-                let temp = res.data.result.data.content.contestList;                
+                let temp = res.data.result.data.content.contestList;  
                 console.log(temp);
+                              
                 this.setState({allContests: temp});
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                if(err.response.status === 401)
+                {
+                    window.localStorage.removeItem("accessToken");
+                    window.localStorage.removeItem("refreshToken");
+                    delete axios.defaults.headers.common["Authorization"];
+                    this.props.history.push('/');
+                }
+                else console.log(err);
+            });
         
     }
 

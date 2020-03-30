@@ -217,7 +217,6 @@ class Contest extends Component
                 }
               ],
             rankings: [{rank: 1, username: "hello", totalScore: "100"}],
-            auth_code: 'Bearer 29d484c139652d4deeaae05878fed6c1ec377d39', // change this
         };
     }    
 
@@ -243,18 +242,12 @@ class Contest extends Component
     {      
         // return; 
         this.setState({contestCode: id});
-        console.log(id);
         
         let url = "https://api.codechef.com/contests/" + id;   
-        
-        const header = {
-            Authorization: this.state.auth_code,
-            Accept: 'application/json',
-        }; 
 
         let promiseArray = [];
         let temp;
-        axios.get(url, {headers: header})
+        axios.get(url)
             .then(res => {
                 temp = res.data.result.data.content;
                 this.setState({contestDetails: temp});
@@ -265,7 +258,7 @@ class Contest extends Component
                     let code = temp.problemsList[i].problemCode;
                     let url2 = (url + '/problems/' + code);   
 
-                    promiseArray.push(axios.get(url2, {headers: header}));
+                    promiseArray.push(axios.get(url2));
                 }
                 
                 let t3 = []
@@ -278,43 +271,81 @@ class Contest extends Component
                         }
                         this.setState({problemsName: t3});
                     })
-                    .catch(err => console.log(err))
+                    .catch(err => {
+                        if(err.response.status === 401)
+                        {
+                            window.localStorage.removeItem("accessToken");
+                            window.localStorage.removeItem("refreshToken");
+                            delete axios.defaults.headers.common["Authorization"];
+                            this.props.history.push('/');
+                        }
+                        else console.log(err);
+                    })
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                if(err.response.status === 401)
+                {
+                    window.localStorage.removeItem("accessToken");
+                    window.localStorage.removeItem("refreshToken");
+                    delete axios.defaults.headers.common["Authorization"];
+                    this.props.history.push('/');
+                }
+                else console.log(err);
+            })
         
         //submissions
         let url2 = "https://api.codechef.com/submissions/"
         axios.get(url2, {
-            headers: header,
             params: {contestCode: id}
         })
-        .then(res => {            
-            this.setState({recentSubmissions: res.data.result.data.content})
+        .then(res => {   
+            let t4 = res.data.result.data.content
+            if(t4 !== null && t4 !== undefined && t4.length !== 0) this.setState({recentSubmissions: res.data.result.data.content})
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+            if(err.response.status === 401)
+            {
+                window.localStorage.removeItem("accessToken");
+                window.localStorage.removeItem("refreshToken");
+                delete axios.defaults.headers.common["Authorization"];
+                this.props.history.push('/');
+            }
+            else console.log(err);
+        })
 
         //rankings
         let t4 = []
         let url3 = "https://api.codechef.com/rankings/" + id;
-        axios.get(url3 , {headers: header})
+        axios.get(url3)
             .then(res => {
                 let arr = res.data.result.data.content;
-                for(var i = 0; i < arr.length && i < 8; i++)
+                if(arr !== null && arr !== undefined && arr.length !== 0)
                 {
-                    let rnk = arr[i].rank;
-                    let name = arr[i].username;
-                    let score = arr[i].totalScore;
+                    for(var i = 0; i < arr.length && i < 8; i++)
+                    {
+                        let rnk = arr[i].rank;
+                        let name = arr[i].username;
+                        let score = arr[i].totalScore;
 
-                    t4.push({
-                        rank: rnk,
-                        username: name,
-                        totalScore: score,
-                    })
+                        t4.push({
+                            rank: rnk,
+                            username: name,
+                            totalScore: score,
+                        })
+                    }
+                    this.setState({rankings: t4})
                 }
-
-                this.setState({rankings: t4})
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                if(err.response.status === 401)
+                {
+                    window.localStorage.removeItem("accessToken");
+                    window.localStorage.removeItem("refreshToken");
+                    delete axios.defaults.headers.common["Authorization"];
+                    this.props.history.push('/');
+                }
+                else console.log(err);
+            })
     }
 
     handleProblemClick = (i) => {
@@ -325,8 +356,10 @@ class Contest extends Component
     UNSAFE_componentWillMount()
     {
         let token = window.localStorage.getItem("accessToken");
-        if(token == null || token.length === 0) this.props.history.push('/');
-        else this.setState({auth_code: "Bearer " + token});
+        if(token == null || token === undefined || token.length === 0) this.props.history.push('/');
+        
+        
+        this.setState({auth_code: "Bearer " + token});
 
         const id = this.props.match.params.contestID; 
         this.updateIT(id);

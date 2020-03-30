@@ -1,5 +1,6 @@
 <?php 
 
+header("Access-Control-Allow-Origin: *");
 require 'vendor/autoload.php';
 
 $configuration = array(
@@ -7,7 +8,7 @@ $configuration = array(
     "client_secret" => "c062f2b65ea802643e88372e5dd3e675",
     "api_endpoint" => "https://api.codechef.com/",
     "access_token_endpoint" => "https://api.codechef.com/oauth/token",
-    "redirect_uri" => "http://localhost:8000/"
+    "redirect_uri" => "https://arcane-escarpment-70732.herokuapp.com/"
 )
 
 function generate_access_token($oauth_details){
