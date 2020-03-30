@@ -91,7 +91,16 @@ class Submit extends Component
             .then(res => {                
                 this.setState({supportedLanguages: res.data.result.data.content.languagesSupported});
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                if(err.response.status === 401)
+                {
+                    window.localStorage.removeItem("accessToken");
+                    window.localStorage.removeItem("refreshToken");
+                    delete axios.defaults.headers.common["Authorization"];
+                    this.props.history.push('/');
+                }
+                else console.log(err);
+            })
     }
 
     handleSubmitClick = () =>
@@ -117,7 +126,16 @@ class Submit extends Component
             .then(res => {
                 link = res.data.result.data.link;
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                if(err.response.status === 401)
+                {
+                    window.localStorage.removeItem("accessToken");
+                    window.localStorage.removeItem("refreshToken");
+                    delete axios.defaults.headers.common["Authorization"];
+                    this.props.history.push('/');
+                }
+                else console.log(err);
+            })
 
         let t1 = 0, t2 = 0, t3 = 0, t4 = "", t5 = "";
         

@@ -36,9 +36,7 @@ class SearchContest extends Component
             let t1 = t.code.toLowerCase().includes(e.target.value.toLowerCase());
             let t2 = t.name.toLowerCase().includes(e.target.value.toLowerCase());
             if(t2 === true || t1 === true)
-            {
-                console.log(t);
-                
+            {                
                 temp.push(t);
             }
         }
@@ -107,9 +105,7 @@ class SearchContest extends Component
     {
         axios.get('https://api.codechef.com/contests')
             .then(res => {
-                let temp = res.data.result.data.content.contestList;  
-                console.log(temp);
-                              
+                let temp = res.data.result.data.content.contestList;                                
                 this.setState({allContests: temp});
             })
             .catch(err => {
