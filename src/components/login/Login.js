@@ -16,7 +16,7 @@ class Login extends Component
         const params = {
             response_type: "code",
             client_id: "b95126500791d884442d2700950f0e1b",
-            redirect_uri: "", // github wala
+            redirect_uri: "https://codechef2.herokuapp.com/", // github wala
             state: "hello",
         }
 
@@ -34,7 +34,7 @@ class Login extends Component
         
         if(authCode == null || authCode === undefined || authCode.length === 0) return;
         
-        let url = "https://arcane-escarpment-70732.herokuapp.com?code=" + authCode; //heroku hosted server
+        let url = "https://fathomless-peak-48169.herokuapp.com?code=" + authCode; //heroku hosted server
         axios.get(url)
             .then(res => {
                 
