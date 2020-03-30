@@ -1,3 +1,4 @@
+// libraries
 import React, {Component} from 'react';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
@@ -8,11 +9,11 @@ class Problem extends Component
     {
         super();
         this.state = {
-            contestID: "-1",
-            problemDetails: {
-                problemCode: '-1',
+            contestID: "-1",                    // contest ID
+            problemDetails: {                   // problem details
+                problemCode: '-1',              
                 problemName: 'Loading...',
-                dateAdded: '2019-04-25',
+                dateAdded: '1980-01-01',
                 languagesSupported: [
                   'C++ 6.3',
                   'PAS gpc',
@@ -68,24 +69,26 @@ class Problem extends Component
                   'COB',
                   'F#'
                 ],
-                sourceSizeLimit: 50000,
-                maxTimeLimit: 4,
+                sourceSizeLimit: 0,
+                maxTimeLimit: 0,
                 challengeType: 'subtask',
-                author: 'farhod_farmon',
-                successfulSubmissions: 33,
-                totalSubmissions: 37,
-                partialSubmissions: 32,
+                author: 'name',
+                successfulSubmissions: 0,
+                totalSubmissions: 0,
+                partialSubmissions: 0,
                 tags: [],
                 body: 'Loading....',
             },
         }
     }
 
+    // for clicking submit button
     handleSubmitClick = () =>
     {        
         this.props.history.push(this.props.match.url + '/submit');
     }
 
+    // for setting state and fetching details
     UNSAFE_componentWillMount()
     {
         let contestID = this.props.match.params.contestID;
@@ -94,7 +97,7 @@ class Problem extends Component
         this.setState({contestID: contestID});
         
         const url = "https://api.codechef.com/contests/" + contestID + "/problems/" + problemID;
-        axios.get(url)
+        axios.get(url)      // problem details fetch
             .then(res => {
                 let data = res.data.result.data.content;
                 this.setState({problemDetails: data});

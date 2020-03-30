@@ -1,3 +1,4 @@
+//libraries
 import React, {Component} from 'react';
 import * as moment from 'moment';
 
@@ -7,14 +8,15 @@ class Timer extends Component
     {
         super();
         this.state = { 
-            currentTime: 1,
-            startTime: 1, 
-            endTime: 200,
-            difference: 0,
-            v: 1,
-        }
+            currentTime: 1,         // current time of server in unix style formating
+            startTime: 1,           // start time of contest
+            endTime: 200,           // end time of contest
+            difference: 0,          // difference between the current time and end time aka remaining time
+            v: 1,                   // setInterval variable for clearing it
+        }   
     }
 
+    // setting the state and calculating remaining time
     UNSAFE_componentWillMount = () =>
     {
         let ct = this.props.currentTime;
@@ -30,17 +32,20 @@ class Timer extends Component
         })
     }
 
+    // changing it;
     componentDidMount()
     {
         let v = setInterval(this.updateTime, 1000);
         this.setState({v: v})
     }
 
+    // clearing the setInterval
     componentWillUnmount()
     {
         clearInterval(this.state.v);
     }
 
+    // subtracting time by 1 and increasing current time by 1;
     updateTime = () =>
     {
         let t1 = this.state.difference - 1;

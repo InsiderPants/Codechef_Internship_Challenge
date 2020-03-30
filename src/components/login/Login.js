@@ -1,9 +1,11 @@
+// libraries
 import React, {Component} from 'react';
 import {Redirect, withRouter} from 'react-router-dom';
 import axios from 'axios';
 
 class Login extends Component
 {
+    // checking if token is there in storage or not
     isAuthenticated = () => {
         let token = window.localStorage.getItem('accessToken');
         
@@ -11,12 +13,13 @@ class Login extends Component
         else return true;
     }
 
+    // for handling login click and redirecting to codechef for oauth
     loginButtonClick = () =>
     {
         const params = {
             response_type: "code",
             client_id: "b95126500791d884442d2700950f0e1b",
-            redirect_uri: "https://codechef2.herokuapp.com/", // github wala
+            redirect_uri: "https://codechef2.herokuapp.com/", 
             state: "hello",
         }
 
@@ -25,6 +28,7 @@ class Login extends Component
         window.location.href = url;
     }
 
+    // for checking if codechef have given us the auth code back or not
     UNSAFE_componentWillMount()
     {
         if(this.isAuthenticated()) return;

@@ -8,8 +8,8 @@ class Submit extends Component
     {
         super();
         this.state = {
-            contestID: "LTIME71A",
-            problemID: "R2D2",
+            contestID: "LTIME71A",          // contestID
+            problemID: "R2D2",              // problem ID
             supportedLanguages: [
                 "C++ 6.3",
                 "PAS gpc",
@@ -65,13 +65,14 @@ class Submit extends Component
                 "COB",
                 "F#"
               ],
-            selected: 'C++ 6.3',
-            code: "",
-            input: "",
-            output: "",
-            statusCode: 0,
-            time_taken: 0,
-            memory_used: 0,
+            // supported languages
+            selected: 'C++ 6.3',            // selected language for code
+            code: "",                       // code
+            input: "",                      // custom inputs
+            output: "",                     // output for custom inputs
+            statusCode: 0,                  // status code for runtime errors
+            time_taken: 0,                  // time taken by code
+            memory_used: 0,                 // memory used
         }
     }
     
@@ -103,11 +104,13 @@ class Submit extends Component
             })
     }
 
+    // on clicking submit button, just mocking it
     handleSubmitClick = () =>
     {
         window.alert("WRONG");
     }
 
+    // runing custom test
     handleRunClick = () =>
     {
         this.setState({output: "Running...."})
@@ -120,9 +123,8 @@ class Submit extends Component
         let url = "https://api.codechef.com/ide/run";
         let url2 = "https://api.codechef.com/ide/status";  
 
-        let link;
-        
-        axios.post(url, data)
+        let link;   // submission link
+        axios.post(url, data)       // submiting code in queue for running
             .then(res => {
                 link = res.data.result.data.link;
             })
@@ -138,8 +140,7 @@ class Submit extends Component
             })
 
         let t1 = 0, t2 = 0, t3 = 0, t4 = "", t5 = "";
-        
-        let t11 = setInterval(() =>
+        let t11 = setInterval(() => // checking every 5 seconds if the code has been code running as codechef hasn't provided and socket connecting
             axios.get(url2, {params: {link: link}})
                 .then(res2 => {                   
                     let time_taken = res2.data.result.data.time;
@@ -148,7 +149,7 @@ class Submit extends Component
                     let output = res2.data.result.data.output;
                     let cmp_info = res2.data.result.data.cmpinfo;
                     
-                    if(t1 !== time_taken || t2 !== signal || t3 !== memory_used || t4 !== output || t5 !== cmp_info)
+                    if(t1 !== time_taken || t2 !== signal || t3 !== memory_used || t4 !== output || t5 !== cmp_info)  // if any default values changes, we know that running of code os done
                     {
                         if(cmp_info.length > 0)
                         {
@@ -159,13 +160,31 @@ class Submit extends Component
                                 output: cmp_info,
                             })
                         }
-                        else
+                        else if(output.length > 0)
                         {
                             this.setState({
                                 time_taken: time_taken,
                                 statusCode: signal,
                                 memory_used:memory_used,
                                 output: output,
+                            })
+                        }
+                        else if(signal !== 0)
+                        {
+                            this.setState({
+                                time_taken: time_taken,
+                                statusCode: signal,
+                                memory_used:memory_used,
+                                output: signal,
+                            })
+                        }
+                        else
+                        {
+                            this.setState({
+                                time_taken: time_taken,
+                                statusCode: signal,
+                                memory_used:memory_used,
+                                output: "",
                             })
                         }
                         clearInterval(t11);

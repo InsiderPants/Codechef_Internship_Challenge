@@ -1,6 +1,8 @@
+// Libraries
 import React, {Component} from 'react';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
+
 
 class SearchContest extends Component
 {
@@ -8,16 +10,16 @@ class SearchContest extends Component
     {
         super();
         this.state = {
-            query: "",
-            allContests: [],
-            contests: [],
-            selected: -1, 
-            no_result: 0, 
+            query: "",          //for the search query
+            allContests: [],    //contest array that would be fetched 
+            contests: [],       //selected contest that should be displayed
+            selected: -1,       //id of highlighted contest
+            no_result: 0,       //variable for no contests
         }
     }
 
+    //input handler
     handleQueryInput = (e) => {
-        //input handler
         this.setState({
             query: e.target.value,
             selected: -1,
@@ -28,31 +30,33 @@ class SearchContest extends Component
             this.setState({contests: []});
             return;
         }
+
         //update the contests array;
         let temp = [];
         for(let t of this.state.allContests)
         {
             if(temp.length >= 10) break;
-            let t1 = t.code.toLowerCase().includes(e.target.value.toLowerCase());
+            let t1 = t.code.toLowerCase().includes(e.target.value.toLowerCase()); //checking if contest name or code have search query as substring
             let t2 = t.name.toLowerCase().includes(e.target.value.toLowerCase());
             if(t2 === true || t1 === true)
             {                
                 temp.push(t);
             }
         }
+        // no result
         if(temp.length === 0) 
         {
             let t1 = {code: "-1", name: "No results"}
             temp.push(t1);
         }
         this.setState({contests: temp});
-        
     }
 
     keypressInSearch = (event) => {
         //keyboard keydown event handler
         if(event.key === 'Enter')
         {            
+            //ENTER key for searching
             if(this.state.query.length !== 0)
             {
                 this.redirect_to_contest();
@@ -86,24 +90,24 @@ class SearchContest extends Component
         }
     }
 
+    //redirect to selected contest;
     redirect_to_contest = () => {
-        //redirect to selected contest;
         if(this.state.contests[this.state.selected].code === "-1")
         {
             this.setState({no_result: 1});
         }
         else
         {
-            // change accordingly
             this.setState({query: this.state.contests[this.state.selected]});
             let temp = this.state.contests[this.state.selected].code;            
-            this.props.history.push('/contest/' + temp);
+            this.props.history.push('/contest/' + temp);  // redirects to contest page
         }
     }
 
+    // for setting state from mounting components
     UNSAFE_componentWillMount = () =>
     {
-        axios.get('https://api.codechef.com/contests')
+        axios.get('https://api.codechef.com/contests') // requesting contest array from codechef
             .then(res => {
                 let temp = res.data.result.data.content.contestList;                                
                 this.setState({allContests: temp});
@@ -118,7 +122,6 @@ class SearchContest extends Component
                 }
                 else console.log(err);
             });
-        
     }
 
     render() 

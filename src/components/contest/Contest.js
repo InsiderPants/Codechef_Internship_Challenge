@@ -1,6 +1,9 @@
+// libraries
 import React, {Component} from 'react';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
+
+//components
 import Timer from './timer';
 
 class Contest extends Component
@@ -9,8 +12,8 @@ class Contest extends Component
     {
         super();
         this.state = {
-            contestCode: "",
-            contestDetails: {
+            contestCode: "",  // code of contest
+            contestDetails: { // sample contest format
                 code: '-1',
                 name: 'Loading...',
                 startDate: '2019-04-27 19:30:00',
@@ -92,136 +95,100 @@ class Contest extends Component
                 ],
                 currentTime: 1585197835,
             },
-            problemsName: ["Loading...", "Loading...", "Loading...", "Loading...", "Loading...", "Loading...", "Loading...", "Loading...", "Loading..."],
-            // problemsName: new Map(),
+            problemsName: ["Loading...", "Loading...", "Loading...", "Loading...", "Loading...", "Loading...", "Loading...", "Loading...", "Loading...", "Loading...", "Loading..."], 
+            //sample problem name array
             recentSubmissions: [
                 {
-                  id: 24108667,
-                  date: '2019-04-27 22:29:55',
                   language: 'C++14',
                   username: 'filyan',
                   problemCode: 'R2D2',
                   contestCode: 'LTIME71A',
                   result: 'AC',
                   score: '28',
-                  time: 1.35,
-                  memory: 29816
                 },
                 {
-                  id: 24108664,
-                  date: '2019-04-27 22:29:54',
                   language: 'C++14',
                   username: 'kazuma',
                   problemCode: 'R2D2',
                   contestCode: 'LTIME71A',
                   result: 'AC',
                   score: '12',
-                  time: 0.06,
-                  memory: 15384
                 },
                 {
-                  id: 24108663,
-                  date: '2019-04-27 22:29:53',
                   language: 'C++14',
                   username: 'jam1729',
                   problemCode: 'DRMP',
                   contestCode: 'LTIME71A',
                   result: 'AC',
                   score: '40',
-                  time: 0,
-                  memory: 15360
                 },
                 {
-                  id: 24108661,
-                  date: '2019-04-27 22:29:52',
                   language: 'C++14',
                   username: 'walragatver',
                   problemCode: 'DRMP',
                   contestCode: 'LTIME71A',
                   result: 'TLE',
                   score: '0',
-                  time: 0.88,
-                  memory: 15240
                 },
                 {
-                  id: 24108660,
-                  date: '2019-04-27 22:29:52',
                   language: 'C++14',
                   username: 'faustaadp',
                   problemCode: 'R2D2',
                   contestCode: 'LTIME71A',
                   result: 'AC',
                   score: '28',
-                  time: 0.4,
-                  memory: 64616
                 },
                 {
-                  id: 24108659,
-                  date: '2019-04-27 22:29:51',
                   language: 'C++14',
                   username: 'harshit_narula',
                   problemCode: 'FAPF',
                   contestCode: 'LTIME71A',
                   result: 'RTE',
                   score: '0',
-                  time: 0,
-                  memory: 0
                 },
                 {
-                  id: 24108658,
-                  date: '2019-04-27 22:29:51',
                   language: 'C++14',
                   username: 'aasom143',
                   problemCode: 'DRMP',
                   contestCode: 'LTIME71A',
                   result: 'WA',
                   score: '0',
-                  time: 0,
-                  memory: 0
                 },
                 {
-                  id: 24108656,
-                  date: '2019-04-27 22:29:50',
                   language: 'C++14',
                   username: 'vagab0nd',
                   problemCode: 'FAPF',
                   contestCode: 'LTIME71A',
                   result: 'WA',
                   score: '0',
-                  time: 0,
-                  memory: 0
                 },
                 {
-                  id: 24108649,
-                  date: '2019-04-27 22:29:46',
                   language: 'C++14',
                   username: 'usurelul',
                   problemCode: 'CHEFRAMI',
                   contestCode: 'LTIME71A',
                   result: 'WA',
                   score: '0',
-                  time: 0,
-                  memory: 0
                 },
                 {
-                  id: 24108645,
-                  date: '2019-04-27 22:29:45',
                   language: 'C++14',
                   username: 'jeezus',
                   problemCode: 'DRMP',
                   contestCode: 'LTIME71A',
                   result: 'WA',
                   score: '0',
-                  time: 0,
-                  memory: 0
                 }
               ],
+            // sample recent submissions
             rankings: [{rank: 1, username: "hello", totalScore: "100"}],
+            // sample ranking
         };
     }    
 
+    // if the contest is parent of two contests then this will redirect to the respective division
     handleMultipleDivCLick = (num) =>
-    {        
+    {       
+        //num is which division is clicked , 0 for div1 and 1 for div2 
         if(num === 0)
         {
             let newID = this.state.contestCode + 'A';
@@ -238,16 +205,16 @@ class Contest extends Component
         }
     }
 
+    // for updation of state by retreiving contest code fro url
     updateIT = (id) =>
     {      
-        // return; 
         this.setState({contestCode: id});
         
         let url = "https://api.codechef.com/contests/" + id;   
 
         let promiseArray = [];
         let temp;
-        axios.get(url)
+        axios.get(url) // contest details
             .then(res => {
                 temp = res.data.result.data.content;
                 this.setState({contestDetails: temp});
@@ -258,7 +225,7 @@ class Contest extends Component
                     let code = temp.problemsList[i].problemCode;
                     let url2 = (url + '/problems/' + code);   
 
-                    promiseArray.push(axios.get(url2));
+                    promiseArray.push(axios.get(url2)); // for problem name, ps you should also give problem name in contest details array
                 }
                 
                 let t3 = []
@@ -272,7 +239,7 @@ class Contest extends Component
                         this.setState({problemsName: t3});
                     })
                     .catch(err => {
-                        if(err.response.status === 401)
+                        if(err.response.status === 401) 
                         {
                             window.localStorage.removeItem("accessToken");
                             window.localStorage.removeItem("refreshToken");
@@ -348,11 +315,13 @@ class Contest extends Component
             })
     }
 
+    // redirecting to the problem
     handleProblemClick = (i) => {
         let url = this.props.match.url + "/problem/" + i;
         this.props.history.push(url);
     }
 
+    // checking if access Token if null or not and setting state
     UNSAFE_componentWillMount()
     {
         let token = window.localStorage.getItem("accessToken");
@@ -367,6 +336,7 @@ class Contest extends Component
 
     render()
     {
+        // for showing two division post
         const dual_mode = (
             <div className = "row justify-content-around">
             <div className = "card" style = {{width: "46%"}}>
@@ -386,6 +356,7 @@ class Contest extends Component
             </div>
         );
 
+        // for showing normal contest body
         const body = (
             <div className = "row justify-content-around">
                 <div className = "col-7">

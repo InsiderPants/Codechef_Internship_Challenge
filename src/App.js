@@ -13,6 +13,7 @@ import Navbar from './components/navbar/navbar';
 
 class App extends Component {
 
+    // setting request headers if there is a token already in storage. In other words, if the user is already logged in.
     UNSAFE_componentWillMount()
     {
         axios.defaults.headers.common['Accept'] = "application/json";
