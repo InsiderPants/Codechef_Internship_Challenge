@@ -1,6 +1,6 @@
 //Libraries
 import React, {Component} from 'react';
-import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import axios from 'axios';
 
 // components import
@@ -17,7 +17,7 @@ class App extends Component {
     {
         axios.defaults.headers.common['Accept'] = "application/json";
         axios.defaults.headers.post['Content-type'] = "application/json";
-        
+
         let token = window.localStorage.getItem("accessToken");
         if(token == null || token === undefined || token.length === 0) return;
         
