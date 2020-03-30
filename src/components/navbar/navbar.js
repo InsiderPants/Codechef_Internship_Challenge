@@ -52,7 +52,6 @@ class Navbar extends Component
         // for login button
         const login = (
             <div>
-                <button className = "btn btn-outline-light btn-sm my-0" onClick = {this.loginButtonClick}> Login </button>
             </div>
         );
 
@@ -67,7 +66,7 @@ class Navbar extends Component
             <div className = "container-fluid bg-dark" >
                 <div className = "container-xl" >
                     <nav className = "navbar navbar-dark">
-                        <span className = "display-5 mb-0 h1" style = {{color: 'white'}} onClick = {this.navbarLogoRoute} style = {{cursor: 'pointer'}}> CODECHEF </span>
+                        <span className = "display-5 mb-0 h1" style = {{color: 'white', curson: 'pointer'}} onClick = {this.navbarLogoRoute}> CODECHEF </span>
                         <div className = "navbar-right navbar">
                             {this.state.isLoggedIn ? user : login}
                         </div>
