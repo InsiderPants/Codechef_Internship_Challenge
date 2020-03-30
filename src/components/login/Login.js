@@ -16,7 +16,7 @@ class Login extends Component
         const params = {
             response_type: "code",
             client_id: "b95126500791d884442d2700950f0e1b",
-            redirect_uri: "https://arcane-escarpment-70732.herokuapp.com/", // github wala
+            redirect_uri: "", // github wala
             state: "hello",
         }
 
